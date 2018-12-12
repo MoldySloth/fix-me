@@ -24,30 +24,51 @@ public class FixmeRouter {
         // Starting unique ID
 //        ID = 1000;
         int     brokerPort = 5000;
-        int     marketPort = 5001;
-
-        try {
-            // create a new socket for each
-            AsynchronousServerSocketChannel brokerChannel;
-            InetSocketAddress brokerHost = new InetSocketAddress("localhost", brokerPort);
-            brokerChannel = AsynchronousServerSocketChannel.open().bind(brokerHost);
-
-            AsynchronousServerSocketChannel marketChannel;
-            InetSocketAddress marketHost = new InetSocketAddress("localhost", marketPort);
-            marketChannel = AsynchronousServerSocketChannel.open().bind(marketHost);
-
-            // listen to sockets
+//        int     marketPort = 5001;
+//
+        try (AsynchronousServerSocketChannel brokerChannel = AsynchronousServerSocketChannel.open()) {
+//            // create a new socket for each
+//            AsynchronousServerSocketChannel brokerChannel;
+            InetSocketAddress brokerHost = new InetSocketAddress(brokerPort);
+            brokerChannel.bind(brokerHost);
+//
+//            AsynchronousServerSocketChannel marketChannel;
+//            InetSocketAddress marketHost = new InetSocketAddress("localhost", marketPort);
+//            marketChannel = AsynchronousServerSocketChannel.open().bind(marketHost);
+//
+//            // listen to sockets
             System.out.println("Server is listening to port " + brokerHost.getPort());
-            System.out.println("Server is listening to port " + marketHost.getPort());
+//            System.out.println("Server is listening to port " + marketHost.getPort());
+//
+//            // socket accepting connections
+//            brokerChannel.accept();
+//            marketChannel.accept();
+            Future<AsynchronousSocketChannel>   acceptCon = brokerChannel.accept();
+            AsynchronousSocketChannel           client = acceptCon.get(10, TimeUnit.SECONDS);
+            if((client != null) && (client.isOpen())) {
+                ByteBuffer      buffer = ByteBuffer.allocate(1024);
+                Future<Integer> readVal = client.read(buffer);
+                System.out.println("Received from client: " + new String(buffer.array()).trim());
+                readVal.get();
+                buffer.flip();
+                String          message = "Hi. This is router";
+                Future<Integer> writeVal = client.write(ByteBuffer.wrap(message.getBytes()));
+                System.out.println("Writing back to client: " + message);
+                writeVal.get();
+                buffer.clear();
+            }
+            client.close();
+//            // Thread??
+//
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
 //    // attachment holds all the attachment properties
 //    private class ConnectionAttachment {
 //        AsynchronousServerSocketChannel     serverChannel;
+//        AsynchronousSocketChannel           clientChannel;
 //        int                                 ID;
 //    }
 
