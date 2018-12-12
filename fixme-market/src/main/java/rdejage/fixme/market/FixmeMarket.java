@@ -1,6 +1,7 @@
-package rdejage.fixme.broker;
+package rdejage.fixme.market;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
@@ -9,13 +10,13 @@ import java.nio.channels.CompletionHandler;
 import java.nio.charset.Charset;
 import java.util.concurrent.Future;
 
-public class FixmeBroker {
+public class FixmeMarket {
     public static void main(String[] args) throws Exception {
         System.out.println("Starting the broker");
 
-        AsynchronousSocketChannel   channel = AsynchronousSocketChannel.open();
-        SocketAddress   serverAddr = new InetSocketAddress("localhost", 5000);
-        Future<Void>    result = channel.connect(serverAddr);
+        AsynchronousSocketChannel channel = AsynchronousSocketChannel.open();
+        SocketAddress serverAddr = new InetSocketAddress("localhost", 5000);
+        Future<Void> result = channel.connect(serverAddr);
         result.get();
         System.out.println("Connected");
         Attachment      attach = new Attachment();
@@ -24,8 +25,8 @@ public class FixmeBroker {
         attach.isRead = false;
         attach.mainThread = Thread.currentThread();
 
-        Charset         cs = Charset.forName("UTF-8");
-        String          message = "Hello. Broker here";
+        Charset cs = Charset.forName("UTF-8");
+        String          message = "Hello. Market here";
         byte[]          data = message.getBytes(cs);
         attach.buffer.put(data);
         attach.buffer.flip();
@@ -83,7 +84,7 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
 
     private String  getTextFromUser() throws Exception {
         System.out.print("please enter a message (bye to quit):");
-        BufferedReader  consoleReader = new BufferedReader(
+        BufferedReader consoleReader = new BufferedReader(
                 new InputStreamReader(System.in));
         String          message = consoleReader.readLine();
         return message;
