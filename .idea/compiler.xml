@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Annotation profile for wethinkcode" enabled="true">
+        <sourceOutputDir name="../router/wethinkcode/target/generated-sources/annotations" />
+        <sourceTestOutputDir name="../router/wethinkcode/target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="broker" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
