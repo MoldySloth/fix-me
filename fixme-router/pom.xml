@@ -37,7 +37,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass></mainClass>
+                            <mainClass>rdejage.fixme.router.FixmeRouter</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
