@@ -29,7 +29,7 @@ public class FixmeRouter {
         try (AsynchronousServerSocketChannel brokerChannel = AsynchronousServerSocketChannel.open()) {
 //            // create a new socket for each
 //            AsynchronousServerSocketChannel brokerChannel;
-            InetSocketAddress brokerHost = new InetSocketAddress(brokerPort);
+            InetSocketAddress brokerHost = new InetSocketAddress("localhost", brokerPort);
             brokerChannel.bind(brokerHost);
 //
 //            AsynchronousServerSocketChannel marketChannel;
@@ -44,20 +44,23 @@ public class FixmeRouter {
 //            brokerChannel.accept();
 //            marketChannel.accept();
             Future<AsynchronousSocketChannel>   acceptCon = brokerChannel.accept();
-            AsynchronousSocketChannel           client = acceptCon.get(10, TimeUnit.SECONDS);
+            AsynchronousSocketChannel           client = acceptCon.get();
+            //Thread.currentThread().join();
             if((client != null) && (client.isOpen())) {
                 ByteBuffer      buffer = ByteBuffer.allocate(1024);
                 Future<Integer> readVal = client.read(buffer);
-                System.out.println("Received from client: " + new String(buffer.array()).trim());
+//                System.out.println("Received from client: " + new String(buffer.array()).trim());
                 readVal.get();
                 buffer.flip();
+                System.out.println("Received from client: " + new String(buffer.array()).trim());
+
                 String          message = "Hi. This is router";
                 Future<Integer> writeVal = client.write(ByteBuffer.wrap(message.getBytes()));
                 System.out.println("Writing back to client: " + message);
                 writeVal.get();
                 buffer.clear();
             }
-            client.close();
+//            client.close();
 //            // Thread??
 //
         } catch (Exception e) {

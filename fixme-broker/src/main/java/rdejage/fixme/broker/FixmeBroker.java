@@ -9,9 +9,10 @@ import java.util.concurrent.Future;
 
 public class FixmeBroker {
     public static void main(String[] args) {
+        System.out.println("Starting the broker");
         try (AsynchronousSocketChannel client = AsynchronousSocketChannel.open()) {
             Future<Void>    result = client.connect(
-                    new InetSocketAddress(5000));
+                    new InetSocketAddress("localhost",5000));
             result.get();
             String      message = "Hello. This is the broker";
             ByteBuffer  buffer = ByteBuffer.wrap(message.getBytes());
@@ -20,9 +21,9 @@ public class FixmeBroker {
             writeInterval.get();
             buffer.flip();
             Future<Integer> readVal = client.read(buffer);
-            System.out.println("Received from server: " + new String(buffer.array()).trim());
             readVal.get();
             buffer.clear();
+            System.out.println("Received from server: " + new String(buffer.array()).trim());
         } catch (IOException | ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

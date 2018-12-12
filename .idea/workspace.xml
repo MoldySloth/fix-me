@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="6f24c1b9-f086-4744-9273-41c00798a361" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixme-broker/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/fixme-broker/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fixme-broker/src/main/java/rdejage/fixme/broker/FixmeBroker.java" beforeDir="false" afterPath="$PROJECT_DIR$/fixme-broker/src/main/java/rdejage/fixme/broker/FixmeBroker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fixme-router/src/main/java/rdejage/fixme/router/FixmeRouter.java" beforeDir="false" afterPath="$PROJECT_DIR$/fixme-router/src/main/java/rdejage/fixme/router/FixmeRouter.java" afterDir="false" />
     </list>
@@ -46,14 +45,14 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="gitignore" value="12" />
-          <entry key="java" value="2921" />
+          <entry key="java" value="3004" />
           <entry key="txt" value="8" />
           <entry key="xml" value="524" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="2921" />
+          <entry key="JAVA" value="3004" />
           <entry key="PLAIN_TEXT" value="20" />
           <entry key="XML" value="524" />
         </counts>
@@ -74,8 +73,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/fixme-router/src/main/java/rdejage/fixme/router/FixmeRouter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="36" column="79" lean-forward="true" selection-start-line="36" selection-start-column="79" selection-end-line="36" selection-end-column="79" />
+            <state relative-caret-position="295">
+              <caret line="32" column="43" lean-forward="true" selection-start-line="32" selection-start-column="43" selection-end-line="32" selection-end-column="43" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -87,7 +86,7 @@
         <entry file="file://$PROJECT_DIR$/fixme-broker/src/main/java/rdejage/fixme/broker/FixmeBroker.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="225">
-              <caret line="15" column="62" lean-forward="true" selection-start-line="15" selection-start-column="62" selection-end-line="15" selection-end-column="62" />
+              <caret line="15" column="25" lean-forward="true" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -117,9 +116,9 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/fixme-router/pom.xml" />
-        <option value="$PROJECT_DIR$/fixme-broker/src/main/java/rdejage/fixme/broker/FixmeBroker.java" />
         <option value="$PROJECT_DIR$/fixme-broker/pom.xml" />
         <option value="$PROJECT_DIR$/fixme-router/src/main/java/rdejage/fixme/router/FixmeRouter.java" />
+        <option value="$PROJECT_DIR$/fixme-broker/src/main/java/rdejage/fixme/broker/FixmeBroker.java" />
       </list>
     </option>
   </component>
@@ -198,7 +197,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544617486041" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544619834463" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -222,22 +221,28 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JAR Application.broker">
+  <component name="RunManager" selected="JAR Application.router">
     <configuration name="broker" type="JarApplication" factoryName="JAR Application">
       <option name="JAR_PATH" value="$PROJECT_DIR$/fixme-broker/target/fixme-broker-1.0-SNAPSHOT.jar" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <module name="fixme" />
-      <method v="2">
-        <option name="RunConfigurationTask" enabled="true" run_configuration_name="router" run_configuration_type="JarApplication" />
-      </method>
+      <module name="fixme-broker" />
+      <method v="2" />
     </configuration>
     <configuration name="router" type="JarApplication" factoryName="JAR Application">
       <option name="JAR_PATH" value="$PROJECT_DIR$/fixme-router/target/fixme-router-1.0-SNAPSHOT.jar" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <module name="fixme" />
+      <module name="fixme-router" />
       <method v="2" />
+    </configuration>
+    <configuration name="run" type="JarApplication" factoryName="JAR Application">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/fixme-broker/target/fixme-broker-1.0-SNAPSHOT.jar" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method v="2">
+        <option name="RunConfigurationTask" enabled="true" run_configuration_name="router" run_configuration_type="JarApplication" />
+      </method>
     </configuration>
     <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
       <module name="fixme" />
@@ -313,6 +318,7 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="JAR Application.run" />
       <item itemvalue="JAR Application.broker" />
       <item itemvalue="JAR Application.router" />
       <item itemvalue="Maven.build" />
@@ -328,16 +334,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1544603876145</updated>
-      <workItem from="1544603882338" duration="11277000" />
+      <workItem from="1544603882338" duration="13529000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11277000" />
+    <option name="totallyTimeSpent" value="13529000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1353" height="1440" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Image Layers" />
       <window_info id="Designer" />
@@ -444,7 +449,7 @@
     <entry file="file://$PROJECT_DIR$/fixme-broker/src/main/java/rdejage/fixme/broker/FixmeBroker.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
-          <caret line="15" column="62" lean-forward="true" selection-start-line="15" selection-start-column="62" selection-end-line="15" selection-end-column="62" />
+          <caret line="15" column="25" lean-forward="true" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -453,8 +458,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/fixme-router/src/main/java/rdejage/fixme/router/FixmeRouter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="36" column="79" lean-forward="true" selection-start-line="36" selection-start-column="79" selection-end-line="36" selection-end-column="79" />
+        <state relative-caret-position="295">
+          <caret line="32" column="43" lean-forward="true" selection-start-line="32" selection-start-column="43" selection-end-line="32" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
