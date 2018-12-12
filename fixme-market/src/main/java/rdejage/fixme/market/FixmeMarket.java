@@ -90,3 +90,7 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
         return message;
     }
 }
+
+// Market hold business logic
+// Receives messages from Broker...
+// Replies with... Executed | Rejected

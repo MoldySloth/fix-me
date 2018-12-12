@@ -182,3 +182,6 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
         e.printStackTrace();
     }
 }
+
+// router opens connections for Brokers and Markets on specific Ports
+// it then relays messages between the two sockets

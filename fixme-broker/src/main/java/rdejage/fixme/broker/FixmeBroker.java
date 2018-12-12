@@ -89,3 +89,6 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
         return message;
     }
 }
+
+// Broker need to send a message... BUY | SELL
+// Will receive messages from market... Execute | Rejected
