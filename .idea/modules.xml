@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/broker/broker.iml" filepath="$PROJECT_DIR$/broker/broker.iml" />
-      <module fileurl="file://$PROJECT_DIR$/market/market.iml" filepath="$PROJECT_DIR$/market/market.iml" />
-      <module fileurl="file://$PROJECT_DIR$/router/router.iml" filepath="$PROJECT_DIR$/router/router.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fixme-broker/fixme-broker.iml" filepath="$PROJECT_DIR$/fixme-broker/fixme-broker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fixme-market/fixme-market.iml" filepath="$PROJECT_DIR$/fixme-market/fixme-market.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fixme-router/fixme-router.iml" filepath="$PROJECT_DIR$/fixme-router/fixme-router.iml" />
     </modules>
   </component>
 </project>
