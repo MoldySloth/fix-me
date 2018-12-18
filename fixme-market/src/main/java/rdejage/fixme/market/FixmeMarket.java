@@ -47,25 +47,26 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
             attach.buffer.get(bytes, 0, limits);
             Charset cs = Charset.forName("UTF-8");
             String  message = new String(bytes, cs);
-            System.out.format("Server responded: " + message);
+            //System.out.format("Server responded: " + message);
             if(message.length() <= 0) {
                 attach.mainThread.interrupt();
                 return;
+            } else {
+                // API data based on symbol
+                try {
+                    String symbol = "AAPL";
+                    String apiData = getMarketData(symbol);
+                    System.out.println(apiData);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                attach.buffer.clear();
+                byte[] data = message.getBytes();
+                attach.buffer.put(data);
+                attach.buffer.flip();
+                attach.isRead = false;
+                attach.channel.write(attach.buffer, attach, this);
             }
-            // API data based on symbol
-            try {
-                String symbol = "AAPL";
-                String apiData = getMarketData(symbol);
-                System.out.println(apiData);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            attach.buffer.clear();
-            byte[]  data = message.getBytes();
-            attach.buffer.put(data);
-            attach.buffer.flip();
-            attach.isRead = false;
-            attach.channel.write(attach.buffer, attach, this);
         } else {
             attach.isRead = true;
             attach.buffer.clear();

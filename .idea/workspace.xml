@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f24c1b9-f086-4744-9273-41c00798a361" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fixme-market/src/main/java/rdejage/fixme/market/FixmeMarket.java" beforeDir="false" afterPath="$PROJECT_DIR$/fixme-market/src/main/java/rdejage/fixme/market/FixmeMarket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixme-router/src/main/java/rdejage/fixme/router/FixmeRouter.java" beforeDir="false" afterPath="$PROJECT_DIR$/fixme-router/src/main/java/rdejage/fixme/router/FixmeRouter.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -46,14 +44,14 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="gitignore" value="12" />
-          <entry key="java" value="8490" />
+          <entry key="java" value="8514" />
           <entry key="txt" value="8" />
           <entry key="xml" value="562" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="8490" />
+          <entry key="JAVA" value="8514" />
           <entry key="PLAIN_TEXT" value="20" />
           <entry key="XML" value="562" />
         </counts>
@@ -89,12 +87,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/fixme-market/src/main/java/rdejage/fixme/market/FixmeMarket.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="661">
-              <caret line="83" column="5" selection-start-line="83" selection-start-column="5" selection-end-line="83" selection-end-column="5" />
+            <state relative-caret-position="226">
+              <caret line="54" column="43" lean-forward="true" selection-start-line="54" selection-start-column="43" selection-end-line="54" selection-end-column="43" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2989#2990#0" expanded="true" />
-                <element signature="e#3024#3025#0" expanded="true" />
+                <element signature="e#2791#2792#0" expanded="true" />
+                <element signature="e#2826#2827#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -367,12 +365,12 @@
       <option name="presentableId" value="Default" />
       <updated>1544603876145</updated>
       <workItem from="1544603882338" duration="18599000" />
-      <workItem from="1545125865758" duration="16210000" />
+      <workItem from="1545125865758" duration="16981000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34809000" />
+    <option name="totallyTimeSpent" value="35580000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1381" height="1440" extended-state="6" />
@@ -387,13 +385,13 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49887976" visible="true" weight="0.329927" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49887976" visible="true" weight="0.329927" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.5011202" side_tool="true" visible="true" weight="0.329927" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.5011202" side_tool="true" visible="true" weight="0.329927" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5003814" side_tool="true" weight="0.329927" />
       <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -459,6 +457,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/fixme-broker/src/main/java/rdejage/fixme/broker/FixmeBroker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-564">
+          <caret line="8" column="32" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/fixme-router/src/main/java/rdejage/fixme/router/FixmeRouter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
@@ -472,21 +477,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fixme-broker/src/main/java/rdejage/fixme/broker/FixmeBroker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-564">
-          <caret line="8" column="32" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/fixme-market/src/main/java/rdejage/fixme/market/FixmeMarket.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="661">
-          <caret line="83" column="5" selection-start-line="83" selection-start-column="5" selection-end-line="83" selection-end-column="5" />
+        <state relative-caret-position="226">
+          <caret line="54" column="43" lean-forward="true" selection-start-line="54" selection-start-column="43" selection-end-line="54" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2989#2990#0" expanded="true" />
-            <element signature="e#3024#3025#0" expanded="true" />
+            <element signature="e#2791#2792#0" expanded="true" />
+            <element signature="e#2826#2827#0" expanded="true" />
           </folding>
         </state>
       </provider>
