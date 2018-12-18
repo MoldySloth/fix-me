@@ -9,10 +9,11 @@ import java.nio.channels.AsynchronousSocketChannel;
 import java.nio.channels.CompletionHandler;
 import java.nio.charset.Charset;
 import java.util.HashMap;
+import java.util.Map;
 
 public class FixmeRouter {
     private static Integer  IDcurr;
-    private static HashMap<Integer, Attachment>  routingTable = new HashMap();
+    private static HashMap<Integer, Attachment>  routingTable = new HashMap<Integer, Attachment>();
     private static String   host = "localhost";
     private static int      brokerPort = 5000;
     private static int      marketPort = 5001;
@@ -156,10 +157,28 @@ public class FixmeRouter {
                 attach.buffer.get(bytes, 0, limits);
                 Charset cs = Charset.forName("UTF-8");
                 String  message = new String(bytes, cs);
+
+                // check message checksum??
+
+                // get attachment id that needs to receive a message
+                // find id in message
+                Integer     id = 1000;
+                // create a new attachment from attachment found
+                Attachment  send = null;
+                while(routingTable != null) {
+                    if(routingTable.containsKey(id)) {
+                        send = routingTable.get(id);
+                    }
+                }
+                send.buffer.clear();
                 System.out.format("Client at %s says: %s%n", attach.clientAddress, message);
+                byte[]  data = message.getBytes(cs);
+                send.buffer.put(data);
+                send.buffer.flip();
                 attach.isRead = false;
                 attach.buffer.rewind();
                 // send message to broker... using broker ID... from router table
+                send.clientChannel.write(send.buffer, send, this);
             } else {
                 // write to the client
                 attach.isRead = true;
