@@ -2,8 +2,7 @@ package rdejage.fixme.market;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
+import java.net.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousSocketChannel;
 import java.nio.channels.CompletionHandler;
@@ -47,6 +46,15 @@ class Attachment {
 class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
     @Override
     public void completed(Integer result, Attachment attach) {
+        // API data based on symbol
+        try {
+            String symbol = "AAPL";
+            String apiData = getMarketData(symbol);
+            System.out.println(apiData);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         if(attach.isRead) {
             attach.buffer.flip();
             int     limits = attach.buffer.limit();
@@ -88,6 +96,38 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
                 new InputStreamReader(System.in));
         String          message = consoleReader.readLine();
         return message;
+    }
+
+    // Alpha Vantage free API, market data and json object return
+    private static String       getMarketData(String symbol) throws Exception {
+        // API key Alpha Vantage J61CV6N8FJQNMXQK
+        String      APIKey = "J61CV6N8FJQNMXQK";
+
+        // get symbol your would like to get data for...
+        // json returns high and low cost for the day, also volume...
+        // https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=MSFT&apikey=demo
+        String      URLstring = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbol + "&apikey=" + APIKey;
+        URL         UrlObj = new URL(URLstring);
+        HttpURLConnection   con = (HttpURLConnection) UrlObj.openConnection();
+        con.setRequestMethod("GET");
+        con.setRequestProperty("Accept", "application/json");
+
+        // check response
+        if(con.getResponseCode() != 200) {
+            throw new RuntimeException("Failed: HTTP error code: " + con.getResponseCode());
+        }
+
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(con.getInputStream()));
+        String      output;
+        System.out.println("Output from server.....");
+        while ((output = in.readLine()) != null) {
+            System.out.println(output);
+        }
+        in.close();
+        con.disconnect();
+
+        return "End of API call";
     }
 }
 
