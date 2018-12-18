@@ -21,17 +21,11 @@ public class FixmeMarket {
         Attachment      attach = new Attachment();
         attach.channel = channel;
         attach.buffer = ByteBuffer.allocate(2048);
-        attach.isRead = false;
+        attach.isRead = true;
         attach.mainThread = Thread.currentThread();
 
-        Charset cs = Charset.forName("UTF-8");
-        String          message = "Hello. Market here";
-        byte[]          data = message.getBytes(cs);
-        attach.buffer.put(data);
-        attach.buffer.flip();
-
         ReadWriteHandler    rwHandler = new ReadWriteHandler();
-        channel.write(attach.buffer, attach, rwHandler);
+        channel.read(attach.buffer, attach, rwHandler);
         attach.mainThread.join();
     }
 }
@@ -46,15 +40,6 @@ class Attachment {
 class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
     @Override
     public void completed(Integer result, Attachment attach) {
-        // API data based on symbol
-        try {
-            String symbol = "AAPL";
-            String apiData = getMarketData(symbol);
-            System.out.println(apiData);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         if(attach.isRead) {
             attach.buffer.flip();
             int     limits = attach.buffer.limit();
@@ -63,14 +48,17 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
             Charset cs = Charset.forName("UTF-8");
             String  message = new String(bytes, cs);
             System.out.format("Server responded: " + message);
-            try {
-                message = this.getTextFromUser();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            if(message.equalsIgnoreCase("bye")) {
+            if(message.length() <= 0) {
                 attach.mainThread.interrupt();
                 return;
+            }
+            // API data based on symbol
+            try {
+                String symbol = "AAPL";
+                String apiData = getMarketData(symbol);
+                System.out.println(apiData);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
             attach.buffer.clear();
             byte[]  data = message.getBytes();
@@ -88,14 +76,6 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
     @Override
     public void failed(Throwable e, Attachment attach) {
         e.printStackTrace();
-    }
-
-    private String  getTextFromUser() throws Exception {
-        System.out.print("please enter a message (bye to quit):");
-        BufferedReader consoleReader = new BufferedReader(
-                new InputStreamReader(System.in));
-        String          message = consoleReader.readLine();
-        return message;
     }
 
     // Alpha Vantage free API, market data and json object return

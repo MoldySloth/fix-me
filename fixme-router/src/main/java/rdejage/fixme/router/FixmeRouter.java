@@ -41,12 +41,12 @@ public class FixmeRouter {
         // attach multiple channels...
         Attachment attachBroker = new Attachment();
         attachBroker.serverChannel = brokerChannel;
-        brokerChannel.accept(attachBroker, new ConnectionHandler());
+        brokerChannel.accept(attachBroker, new BrokerConnectionHandler());
         Thread.currentThread().join();
 
         Attachment attachMarket = new Attachment();
         attachBroker.serverChannel = marketChannel;
-        marketChannel.accept(attachMarket, new ConnectionHandler());
+        marketChannel.accept(attachMarket, new MarketConnectionHandler());
         Thread.currentThread().join();
 
         // if thread is interrupted, then exit
@@ -101,7 +101,7 @@ public class FixmeRouter {
         Integer                             ID;
     }
 
-    private static class ConnectionHandler implements CompletionHandler<AsynchronousSocketChannel, Attachment> {
+    private static class BrokerConnectionHandler implements CompletionHandler<AsynchronousSocketChannel, Attachment> {
         @Override
         public void completed(AsynchronousSocketChannel client, Attachment attach) {
             try {
@@ -119,6 +119,40 @@ public class FixmeRouter {
 
                 newAttach.clientChannel.write(newAttach.buffer);
                 newAttach.clientChannel.read(newAttach.buffer, newAttach, rwHandler);
+
+                routingTable.put(newAttach.ID, newAttach);
+                System.out.format("Accepted a connection from %s%n", clientAddr);
+                System.out.println("Attachment created: " + IDcurr + "\n");
+                IDcurr++;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void failed(Throwable e, Attachment attach) {
+            System.out.println("Failed to accept a connection.");
+            e.printStackTrace();
+        }
+    }
+
+    private static class MarketConnectionHandler implements CompletionHandler<AsynchronousSocketChannel, Attachment> {
+        @Override
+        public void completed(AsynchronousSocketChannel client, Attachment attach) {
+            try {
+                SocketAddress   clientAddr = client.getRemoteAddress();
+                attach.serverChannel.accept(attach, this);
+                ReadWriteHandler    rwHandler = new ReadWriteHandler();
+                Attachment          newAttach = new Attachment();
+
+                newAttach.serverChannel = attach.serverChannel;
+                newAttach.clientChannel = client;
+                newAttach.buffer = ByteBuffer.allocate(2048);
+                newAttach.isRead = true;
+                newAttach.ID = IDcurr;
+                newAttach.clientAddress = clientAddr;
+
+                newAttach.clientChannel.write(newAttach.buffer);
 
                 routingTable.put(newAttach.ID, newAttach);
                 System.out.format("Accepted a connection from %s%n", clientAddr);
