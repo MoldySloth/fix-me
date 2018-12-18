@@ -11,17 +11,16 @@ import java.nio.charset.Charset;
 import java.util.HashMap;
 
 public class FixmeRouter {
-    private static Integer IDcurr;
+    private static Integer  IDcurr;
     private static HashMap<Integer, Attachment>  routingTable = new HashMap();
-    private static String host = "localhost";
-    private static int     brokerPort = 5000;
-    private static int     marketPort = 5001;
+    private static String   host = "localhost";
+    private static int      brokerPort = 5000;
+    private static int      marketPort = 5001;
     // store sockets in some sort of list of ConnectionAttachments
 
     // main function
     public static void main(String[] args) throws Exception {
         System.out.println("Starting the router");
-
         // Starting unique ID
         IDcurr = 1000;
 
@@ -51,6 +50,7 @@ public class FixmeRouter {
 
         // if thread is interrupted, then exit
         if(Thread.currentThread().isInterrupted()) {
+            // Should close??
             return ;
         }
     }
@@ -108,13 +108,17 @@ public class FixmeRouter {
                 attach.serverChannel.accept(attach, this);
                 ReadWriteHandler    rwHandler = new ReadWriteHandler();
                 Attachment          newAttach = new Attachment();
+
                 newAttach.serverChannel = attach.serverChannel;
                 newAttach.clientChannel = client;
                 newAttach.buffer = ByteBuffer.allocate(2048);
-                newAttach.isRead = true;
+                newAttach.isRead = false;
                 newAttach.ID = IDcurr;
                 newAttach.clientAddress = clientAddr;
-                client.read(newAttach.buffer, newAttach, rwHandler);
+
+                newAttach.clientChannel.write(newAttach.buffer);
+                newAttach.clientChannel.read(newAttach.buffer, newAttach, rwHandler);
+
                 routingTable.put(newAttach.ID, newAttach);
                 System.out.format("Accepted a connection from %s%n", clientAddr);
                 System.out.println("Attachment created: " + IDcurr + "\n");
@@ -136,6 +140,7 @@ public class FixmeRouter {
         public void completed(Integer result, Attachment attach) {
             if(result == -1) {
                 try {
+                    // remove connection from routing table
                     attach.clientChannel.close();
                     System.out.format("Stopped listening to the client %s%n", attach.clientAddress);
                 } catch (IOException e) {
@@ -154,9 +159,9 @@ public class FixmeRouter {
                 System.out.format("Client at %s says: %s%n", attach.clientAddress, message);
                 attach.isRead = false;
                 attach.buffer.rewind();
+                // send message to broker... using broker ID... from router table
             } else {
                 // write to the client
-                attach.clientChannel.write(attach.buffer, attach, this);
                 attach.isRead = true;
                 attach.buffer.clear();
                 attach.clientChannel.read(attach.buffer, attach, this);

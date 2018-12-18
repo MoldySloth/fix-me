@@ -7,6 +7,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousSocketChannel;
 import java.nio.channels.CompletionHandler;
 import java.nio.charset.Charset;
+import java.util.Scanner;
 import java.util.concurrent.Future;
 
 public class FixmeBroker {
@@ -24,14 +25,14 @@ public class FixmeBroker {
         attach.isRead = true;
         attach.mainThread = Thread.currentThread();
 
-        Charset         cs = Charset.forName("UTF-8");
-        String          message = "Hello. Broker here";
-        byte[]          data = message.getBytes(cs);
-        attach.buffer.put(data);
-        attach.buffer.flip();
+//        Charset         cs = Charset.forName("UTF-8");
+//        String          message = "Hello. Broker here";
+//        byte[]          data = message.getBytes(cs);
+//        attach.buffer.put(data);
+//        attach.buffer.flip();
 
         ReadWriteHandler    rwHandler = new ReadWriteHandler();
-        channel.write(attach.buffer, attach, rwHandler);
+        channel.read(attach.buffer, attach, rwHandler);
         attach.mainThread.join();
     }
 }
@@ -53,22 +54,23 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
             attach.buffer.get(bytes, 0, limits);
             Charset cs = Charset.forName("UTF-8");
             String  message = new String(bytes, cs);
-            System.out.format("Server responded: " + message);
+            if(message.charAt(1) == 'I') {
+                System.out.println(message);
+            } else {
+                System.out.format("Server responded: " + message);
+            }
+            message = this.getTextFromUser();
+
             try {
-                message = this.getTextFromUser();
+                attach.buffer.clear();
+                byte[]  data = message.getBytes();
+                attach.buffer.put(data);
+                attach.buffer.flip();
+                attach.isRead = false;
+                attach.channel.write(attach.buffer, attach, this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            if(message.equalsIgnoreCase("bye")) {
-                attach.mainThread.interrupt();
-                return;
-            }
-            attach.buffer.clear();
-            byte[]  data = message.getBytes();
-            attach.buffer.put(data);
-            attach.buffer.flip();
-            attach.isRead = false;
-            attach.channel.write(attach.buffer, attach, this);
         } else {
             attach.isRead = true;
             attach.buffer.clear();
@@ -81,12 +83,17 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
         e.printStackTrace();
     }
 
-    private String  getTextFromUser() throws Exception {
-        System.out.print("please enter a message (bye to quit):");
-        BufferedReader  consoleReader = new BufferedReader(
-                new InputStreamReader(System.in));
-        String          message = consoleReader.readLine();
-        return message;
+    private String  getTextFromUser() {
+        System.out.print("please enter a message (bye to quit):\n");
+        try {
+            Scanner     scanner = new Scanner(System.in);
+            String      message = scanner.nextLine();
+
+            return message;
+        } catch (Exception e) {
+            System.out.println("No input given");
+        }
+        return "No input";
     }
 }
 
