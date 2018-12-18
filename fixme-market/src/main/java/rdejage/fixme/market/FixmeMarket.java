@@ -101,12 +101,17 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
     // Alpha Vantage free API, market data and json object return
     private static String       getMarketData(String symbol) throws Exception {
         // API key Alpha Vantage J61CV6N8FJQNMXQK
-        String      APIKey = "J61CV6N8FJQNMXQK";
+        //String      APIKey = "J61CV6N8FJQNMXQK";
 
         // get symbol your would like to get data for...
         // json returns high and low cost for the day, also volume...
         // https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=MSFT&apikey=demo
-        String      URLstring = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbol + "&apikey=" + APIKey;
+        // String      URLstring = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbol + "&apikey=" + APIKey;
+
+        // IEX Trading API
+        // https://api.iextrading.com/1.0/stock/{symbol}/quote
+        String      URLstring = "https://api.iextrading.com/1.0/stock/" + symbol + "/previous";
+
         URL         UrlObj = new URL(URLstring);
         HttpURLConnection   con = (HttpURLConnection) UrlObj.openConnection();
         con.setRequestMethod("GET");
@@ -121,13 +126,14 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
                 new InputStreamReader(con.getInputStream()));
         String      output;
         System.out.println("Output from server.....");
+        StringBuffer    content = new StringBuffer();
         while ((output = in.readLine()) != null) {
-            System.out.println(output);
+            content.append(output);
         }
         in.close();
         con.disconnect();
 
-        return "End of API call";
+        return content.toString();
     }
 }
 
