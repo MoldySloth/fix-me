@@ -56,41 +56,6 @@ public class FixmeRouter {
         }
     }
 
-    // test
-//    private void ConnectionAttachment() throws IOException, InterruptedException, ExecutionException {
-//        AsynchronousServerSocketChannel     serverChannel;
-//        InetSocketAddress   hostAddress = new InetSocketAddress("localhost", brokerPort);
-//        serverChannel = AsynchronousServerSocketChannel.open().bind(hostAddress);
-//
-//        System.out.println("Server channel bound to port: " + brokerPort);
-//        System.out.println("Waiting for a connection....");
-//
-//        AsynchronousSocketChannel   clientChannel =
-//
-//        System.out.println("Messages from client: ");
-//        if((clientChannel != null) && (clientChannel.isOpen())) {
-//            while(true) {
-//                ByteBuffer      buffer = ByteBuffer.allocate(32);
-//                Future          result = clientChannel.read(buffer);
-//
-//                while(!result.isDone()) {
-//                    // do nothing
-//                }
-//
-//                buffer.flip();
-//                String      message = new String(buffer.array()).trim();
-//                System.out.println(message);
-//
-//                if(message.equals("Bye.")) {
-//                    break;
-//                }
-//                buffer.clear();
-//            }
-//            clientChannel.close();
-//        }
-//        serverChannel.close();
-//    }
-
     // attachment holds all the attachment properties
     private static class Attachment {
         AsynchronousServerSocketChannel     serverChannel;
@@ -123,9 +88,9 @@ public class FixmeRouter {
                 System.out.println(newAttach.ID + " connected");
 
                 // write ID to buffer to read ID in instance
-                CharBuffer cbuf = newAttach.buffer.asCharBuffer();
-                cbuf.put("ID:"+ newAttach.ID);
-                cbuf.flip();
+                CharBuffer charBuffer = newAttach.buffer.asCharBuffer();
+                charBuffer.put("ID:"+ newAttach.ID);
+                charBuffer.flip();
 
                 System.out.format("Accepted a connection from %s%n", clientAddr);
                 System.out.println("Attachment created: " + IDcurr + "\n");
@@ -165,9 +130,9 @@ public class FixmeRouter {
                 System.out.println(newAttach.ID + " connected");
 
                 // write ID to buffer to read ID in instance
-                CharBuffer cbuf = newAttach.buffer.asCharBuffer();
-                cbuf.put("ID:"+ newAttach.ID);
-                cbuf.flip();
+                CharBuffer charBuffer = newAttach.buffer.asCharBuffer();
+                charBuffer.put("ID:"+ newAttach.ID);
+                charBuffer.flip();
 
                 System.out.format("Accepted a connection from %s%n", clientAddr);
                 System.out.println("Attachment created: " + IDcurr + "\n");
@@ -187,9 +152,7 @@ public class FixmeRouter {
 
     private static Attachment   getAttachment(Integer key) {
         for(Map.Entry<Integer, Attachment> entry : routingTable.entrySet()) {
-            System.out.println("Key: " + entry.getKey() + " with ID: " + entry.getValue().ID);
             if(entry.getValue().ID.equals(key)) {
-                System.out.println("returning attachment: " + entry.getKey());
                 return entry.getValue();
             }
         }
@@ -245,8 +208,6 @@ public class FixmeRouter {
                     // message example = 1001|1000|buy|aapl|12|12|1955
                     // create a new attachment from attachment found
                     Attachment  send = getAttachment(check);
-                    System.out.println("send connection type: " + send.connectionType);
-                    System.out.println("attach connection type: " + attach.connectionType);
                     if(send.ID == null || (send.connectionType.equals("Broker") && attach.connectionType.equals("Broker")) || (send.connectionType.equals("Market") && attach.connectionType.equals("Market"))) {
                         send = attach;
                         System.out.println("SEND ID: " + send.ID);

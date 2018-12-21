@@ -49,9 +49,12 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
             Charset cs = Charset.forName("UTF-8");
             String  message = new String(bytes, cs);
 
+            // get the ID from the charBuffer written to the channel
             if(message.charAt(1) == 'I') {
-                System.out.println(message);
-                attach.ID = Integer.parseInt(message.replaceAll("[\\D]", ""));
+                //System.out.println(message);
+                String      messageID = message.replaceAll("[^0-9]", "");
+                Integer     id = Integer.parseInt(messageID);
+                attach.ID = id;
             } else {
                 System.out.format("Server responded: " + message + "\n");
             }
@@ -177,7 +180,6 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
         int     checksum = 0;
         for(int i = 0; i < message.length(); i++) {
             checksum += message.charAt(i);
-            System.out.println("Checksum count: " + checksum);
         }
 
         message += Integer.toString(checksum);

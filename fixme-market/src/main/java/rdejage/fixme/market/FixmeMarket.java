@@ -49,9 +49,12 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
             String  message = new String(bytes, cs);
             //System.out.format("Server responded: " + message);
             if(message.length() > 0) {
+                // get the ID from the charBuffer written to the channel
                 if(message.charAt(1) == 'I') {
-                    System.out.println(message);
-                    attach.ID = Integer.parseInt(message.replaceAll("[\\D]", ""));
+                    //System.out.println(message);
+                    String      messageID = message.replaceAll("[^0-9]", "");
+                    Integer     id = Integer.parseInt(messageID);
+                    attach.ID = id;
                     attach.isRead = true;
                     attach.buffer.clear();
                     attach.channel.read(attach.buffer, attach, this);
@@ -62,14 +65,49 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
                     try {
                         // split the message into fix message data
                         String[]    messageData = message.split("\\|");
-                        for(String data : messageData) {
-                            System.out.println(data);
+
+                        // get market data and return fix message
+                        // get broker ID
+                        Integer     brokerID = Integer.parseInt(messageData[1]);
+
+                        // get BUY / SELL
+                        String      action = messageData[2];
+                        // if sell... then add to sales available??
+
+                        // get Instrument symbol
+                        String      instrument = messageData[3].toLowerCase();
+
+                        // get Price
+                        Integer     price = Integer.parseInt(messageData[4]);
+
+                        // get Quantity
+                        Integer     quantity = Integer.parseInt(messageData[5]);
+
+                        // get API data
+                        String apiData = getMarketData(instrument);
+                        System.out.println(apiData);
+
+                        // get status from API data analysis
+                        String      status = "Rejected";
+
+                        // Construct message
+                        String  marketMessage = "";
+                        marketMessage += brokerID + "|" + attach.ID + "|";
+                        marketMessage += status + "|";
+                        marketMessage += action + "|";
+                        marketMessage += price + "|";
+                        marketMessage += quantity + "|";
+
+                        // calculate checksum
+                        int     checksum = 0;
+                        for(int i = 0; i < message.length(); i++) {
+                            checksum += message.charAt(i);
                         }
 
-//                        String symbol = "AAPL";
-//                        String apiData = getMarketData(symbol);
-//                        System.out.println(apiData);
-                        message = "this is the returned data form the market";
+                        marketMessage += Integer.toString(checksum);
+
+                        // Send message
+                        message = marketMessage;
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
