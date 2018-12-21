@@ -43,24 +43,32 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
     public void completed(Integer result, Attachment attach) {
         if(attach.isRead) {
             attach.buffer.flip();
-            int     limits = attach.buffer.limit();
-            byte    bytes[] = new byte[limits];
-            attach.buffer.get(bytes, 0, limits);
+            byte    bytes[] = new byte[attach.buffer.limit()];
+            attach.buffer.get(bytes);
             Charset cs = Charset.forName("UTF-8");
             String  message = new String(bytes, cs);
             //System.out.format("Server responded: " + message);
             if(message.length() > 0) {
                 if(message.charAt(1) == 'I') {
                     System.out.println(message);
+                    attach.id = Integer.parseInt(message.replaceAll("[\\D]", ""));
                     attach.isRead = true;
                     attach.buffer.clear();
                     attach.channel.read(attach.buffer, attach, this);
                 } else {
+                    System.out.println("Server Responded: " + message + "\n");
+
                     // API data based on symbol
                     try {
-                        String symbol = "AAPL";
-                        String apiData = getMarketData(symbol);
-                        System.out.println(apiData);
+                        // split the message into fix message data
+                        String[]    messageData = message.split("\\|");
+                        for(String data : messageData) {
+                            System.out.println(data);
+                        }
+
+//                        String symbol = "AAPL";
+//                        String apiData = getMarketData(symbol);
+//                        System.out.println(apiData);
                         message = "this is the returned data form the market";
                     } catch (Exception e) {
                         e.printStackTrace();

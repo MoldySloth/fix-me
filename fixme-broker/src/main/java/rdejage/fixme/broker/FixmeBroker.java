@@ -79,6 +79,7 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
             attach.buffer.get(bytes);
             Charset cs = Charset.forName("UTF-8");
             String  message = new String(bytes, cs);
+
             if(message.charAt(1) == 'I') {
                 System.out.println(message);
                 attach.ID = Integer.parseInt(message.replaceAll("[\\D]", ""));
@@ -111,7 +112,6 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
 
     private String  getTextFromUser(Integer id) {
         String      message = "";
-        message += id + "|";
 
         // get market ID?
         System.out.println("Please enter a market ID:");
@@ -124,7 +124,7 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
                 if(MID < 1000) {
                     System.out.println("Invalid input");
                 } else {
-                    message += Integer.toString(MID) + "|";
+                    message += Integer.toString(MID) + "|" + id + "|";
                     validInput = true;
                 }
             } catch (InputMismatchException e) {
