@@ -40,14 +40,13 @@ public class FixmeRouter {
         System.out.println("Server is listening to port " + marketHost.getPort());
 
         // attach multiple channels...
+        Attachment attachMarket = new Attachment();
+        attachMarket.serverChannel = marketChannel;
+        marketChannel.accept(attachMarket, new MarketConnectionHandler());
+
         Attachment attachBroker = new Attachment();
         attachBroker.serverChannel = brokerChannel;
         brokerChannel.accept(attachBroker, new BrokerConnectionHandler());
-        Thread.currentThread().join();
-
-        Attachment attachMarket = new Attachment();
-        attachBroker.serverChannel = marketChannel;
-        marketChannel.accept(attachMarket, new MarketConnectionHandler());
         Thread.currentThread().join();
 
         // if thread is interrupted, then exit
