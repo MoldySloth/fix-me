@@ -26,39 +26,9 @@ public class FixmeBroker {
         attach.isRead = true;
         attach.mainThread = Thread.currentThread();
 
-//        Charset         cs = Charset.forName("UTF-8");
-//        String          message = "Hello. Broker here";
-//        byte[]          data = message.getBytes(cs);
-//        attach.buffer.put(data);
-//        attach.buffer.flip();
-
         ReadWriteHandler    rwHandler = new ReadWriteHandler();
         channel.read(attach.buffer, attach, rwHandler);
         attach.mainThread.join();
-//        AsynchronousSocketChannel   socketChannel = AsynchronousSocketChannel.open();
-//        socketChannel.connect(new InetSocketAddress("localhost", 5000));
-//
-//        // reading from a channel
-//        ByteBuffer      buffer = ByteBuffer.allocate(48);
-//
-//        int             bytesRead = socketChannel.read(buffer);
-//        if(bytesRead == -1) {
-//            // end of the stream
-//        }
-//
-//        // writing to the channel
-//        String          newData = "New string to write to file... " + System.currentTimeMillis();
-//
-//        ByteBuffer      buffer = ByteBuffer.allocate(1048);
-//        buffer.clear();
-//        buffer.put(newData.getBytes());
-//        buffer.flip();
-//
-//        while(buffer.hasRemaining()) {
-//            socketChannel.write(buffer);
-//        }
-//
-//        socketChannel.close();
     }
 }
 

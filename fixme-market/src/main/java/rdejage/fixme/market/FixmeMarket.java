@@ -11,11 +11,11 @@ import java.util.concurrent.Future;
 
 public class FixmeMarket {
     public static void main(String[] args) throws Exception {
-        System.out.println("Starting the broker");
+        System.out.println("Starting the market");
 
-        AsynchronousSocketChannel channel = AsynchronousSocketChannel.open();
-        SocketAddress serverAddr = new InetSocketAddress("localhost", 5000);
-        Future<Void> result = channel.connect(serverAddr);
+        AsynchronousSocketChannel   channel = AsynchronousSocketChannel.open();
+        SocketAddress   serverAddr = new InetSocketAddress("localhost", 5001);
+        Future<Void>    result = channel.connect(serverAddr);
         result.get();
         System.out.println("Connected");
         Attachment      attach = new Attachment();
@@ -31,7 +31,7 @@ public class FixmeMarket {
 }
 
 class Attachment {
-    Integer                     id;
+    Integer                     ID;
     AsynchronousSocketChannel   channel;
     ByteBuffer                  buffer;
     Thread                      mainThread;
@@ -51,7 +51,7 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
             if(message.length() > 0) {
                 if(message.charAt(1) == 'I') {
                     System.out.println(message);
-                    attach.id = Integer.parseInt(message.replaceAll("[\\D]", ""));
+                    attach.ID = Integer.parseInt(message.replaceAll("[\\D]", ""));
                     attach.isRead = true;
                     attach.buffer.clear();
                     attach.channel.read(attach.buffer, attach, this);

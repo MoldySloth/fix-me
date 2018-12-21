@@ -242,12 +242,15 @@ public class FixmeRouter {
                 } else {
                     // get attachment id that needs to receive a message
                     // find id in message
-                    // BID|MID|BUY/SELL|SYMBOL|PRICE|QUANTITY|CHECKSUM
+                    // sendToID|fromID|BUY/SELL|SYMBOL|PRICE|QUANTITY|CHECKSUM
                     // message example = 1001|1000|buy|aapl|12|12|1955
                     // create a new attachment from attachment found
                     Attachment  send = getAttachment(check);
-                    if(send.ID == 0 || (send.connectionType.equals("Broker") && attach.connectionType.equals("Broker")) || (send.connectionType.equals("Market") && attach.connectionType.equals("Market"))) {
+                    System.out.println("send connection type: " + send.connectionType);
+                    System.out.println("attach connection type: " + attach.connectionType);
+                    if(send.ID == null || (send.connectionType.equals("Broker") && attach.connectionType.equals("Broker")) || (send.connectionType.equals("Market") && attach.connectionType.equals("Market"))) {
                         send = attach;
+                        System.out.println("SEND ID: " + send.ID);
                     }
                     System.out.format("Client at %s says: %s%n", attach.clientAddress, message);
                     send.buffer.clear();
@@ -257,6 +260,7 @@ public class FixmeRouter {
                     attach.isRead = false;
                     attach.buffer.rewind();
                     // send message to broker... using broker ID... from router table
+                    System.out.println("Sending to ID: " + send.ID + " with message " + message);
                     send.clientChannel.write(send.buffer, send, this);
                 }
             } else {
