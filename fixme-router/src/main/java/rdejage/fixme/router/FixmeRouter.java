@@ -99,13 +99,15 @@ public class FixmeRouter {
         SocketAddress                       clientAddress;
         Boolean                             isRead;
         Integer                             ID;
+        String                              connectionType;
     }
 
     private static class BrokerConnectionHandler implements CompletionHandler<AsynchronousSocketChannel, Attachment> {
         @Override
         public void completed(AsynchronousSocketChannel client, Attachment attach) {
             try {
-                SocketAddress   clientAddr = client.getRemoteAddress();
+                attach.connectionType = "Broker";
+                SocketAddress       clientAddr = client.getRemoteAddress();
                 attach.serverChannel.accept(attach, this);
                 ReadWriteHandler    rwHandler = new ReadWriteHandler();
                 Attachment          newAttach = new Attachment();
@@ -140,9 +142,9 @@ public class FixmeRouter {
         @Override
         public void completed(AsynchronousSocketChannel client, Attachment attach) {
             try {
+                attach.connectionType = "Market";
                 SocketAddress   clientAddr = client.getRemoteAddress();
                 attach.serverChannel.accept(attach, this);
-                ReadWriteHandler    rwHandler = new ReadWriteHandler();
                 Attachment          newAttach = new Attachment();
 
                 newAttach.serverChannel = attach.serverChannel;
@@ -152,12 +154,12 @@ public class FixmeRouter {
                 newAttach.ID = IDcurr;
                 newAttach.clientAddress = clientAddr;
 
-                newAttach.clientChannel.write(newAttach.buffer);
-
                 routingTable.put(newAttach.ID, newAttach);
                 System.out.format("Accepted a connection from %s%n", clientAddr);
                 System.out.println("Attachment created: " + IDcurr + "\n");
                 IDcurr++;
+
+                newAttach.clientChannel.write(newAttach.buffer);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -170,12 +172,23 @@ public class FixmeRouter {
         }
     }
 
+    private static Attachment   getAttachment(Integer key) {
+        for(Map.Entry<Integer, Attachment> entry : routingTable.entrySet()) {
+            System.out.println("Key: " + entry.getKey() + " with ID: " + entry.getValue().ID);
+            if(entry.getValue().ID.equals(key)) {
+                return entry.getValue();
+            }
+        }
+        return null;
+    }
+
     private static class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
         @Override
         public void completed(Integer result, Attachment attach) {
             if(result == -1) {
                 try {
                     // remove connection from routing table
+                    routingTable.remove(attach.ID);
                     attach.clientChannel.close();
                     System.out.format("Stopped listening to the client %s%n", attach.clientAddress);
                 } catch (IOException e) {
@@ -196,13 +209,12 @@ public class FixmeRouter {
 
                 // get attachment id that needs to receive a message
                 // find id in message
-                Integer     id = 1000;
+                // BID|MID|BUY/SELL|SYMBOL|PRICE|QUANTITY|CHECKSUM
+                // message example = 1001|1000|buy|aapl|12|12|1955
                 // create a new attachment from attachment found
-                Attachment  send = null;
-                while(routingTable != null) {
-                    if(routingTable.containsKey(id)) {
-                        send = routingTable.get(id);
-                    }
+                Attachment  send = getAttachment(attach.ID);
+                if(send == null) {
+                    send = attach;
                 }
                 send.buffer.clear();
                 System.out.format("Client at %s says: %s%n", attach.clientAddress, message);

@@ -31,6 +31,7 @@ public class FixmeMarket {
 }
 
 class Attachment {
+    Integer                     id;
     AsynchronousSocketChannel   channel;
     ByteBuffer                  buffer;
     Thread                      mainThread;
@@ -48,24 +49,32 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
             Charset cs = Charset.forName("UTF-8");
             String  message = new String(bytes, cs);
             //System.out.format("Server responded: " + message);
-            if(message.length() <= 0) {
-                attach.mainThread.interrupt();
-                return;
-            } else {
-                // API data based on symbol
-                try {
-                    String symbol = "AAPL";
-                    String apiData = getMarketData(symbol);
-                    System.out.println(apiData);
-                } catch (Exception e) {
-                    e.printStackTrace();
+            if(message.length() > 0) {
+                if(message.charAt(1) == 'I') {
+                    System.out.println(message);
+                    attach.isRead = true;
+                    attach.buffer.clear();
+                    attach.channel.read(attach.buffer, attach, this);
+                } else {
+                    // API data based on symbol
+                    try {
+                        String symbol = "AAPL";
+                        String apiData = getMarketData(symbol);
+                        System.out.println(apiData);
+                        message = "this is the returned data form the market";
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    attach.buffer.clear();
+                    byte[] data = message.getBytes();
+                    attach.buffer.put(data);
+                    attach.buffer.flip();
+                    attach.isRead = false;
+                    attach.channel.write(attach.buffer, attach, this);
                 }
-                attach.buffer.clear();
-                byte[] data = message.getBytes();
-                attach.buffer.put(data);
-                attach.buffer.flip();
-                attach.isRead = false;
-                attach.channel.write(attach.buffer, attach, this);
+            } else {
+                System.out.println("Connection disconnected");
+                System.exit(0);
             }
         } else {
             attach.isRead = true;
@@ -81,16 +90,9 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
 
     // Alpha Vantage free API, market data and json object return
     private static String       getMarketData(String symbol) throws Exception {
-        // API key Alpha Vantage J61CV6N8FJQNMXQK
-        //String      APIKey = "J61CV6N8FJQNMXQK";
-
         // get symbol your would like to get data for...
         // json returns high and low cost for the day, also volume...
-        // https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=MSFT&apikey=demo
-        // String      URLstring = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbol + "&apikey=" + APIKey;
-
         // IEX Trading API
-        // https://api.iextrading.com/1.0/stock/{symbol}/quote
         String      URLstring = "https://api.iextrading.com/1.0/stock/" + symbol + "/previous";
 
         URL         UrlObj = new URL(URLstring);
