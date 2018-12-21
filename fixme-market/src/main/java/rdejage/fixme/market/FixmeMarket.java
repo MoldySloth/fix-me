@@ -60,7 +60,6 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
                     attach.channel.read(attach.buffer, attach, this);
                 } else {
                     System.out.println("Server Responded: " + message + "\n");
-                    JSONParser  parser = new JSONParser();
 
                     // API data based on symbol
                     try {
@@ -86,7 +85,7 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
 
                         // get API data from json string
                         String apiData = getMarketData(instrument);
-                        JSONObject  json = new JSONObject();
+                        JSONObject  json = new JSONObject(apiData);
 
                         // get status from API data analysis
                         String      status = "Rejected";

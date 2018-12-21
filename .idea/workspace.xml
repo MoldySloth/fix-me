@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6f24c1b9-f086-4744-9273-41c00798a361" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/fixme-market/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/fixme-market/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixme-market/src/main/java/rdejage/fixme/market/FixmeMarket.java" beforeDir="false" afterPath="$PROJECT_DIR$/fixme-market/src/main/java/rdejage/fixme/market/FixmeMarket.java" afterDir="false" />
-    </list>
+    <list default="true" id="6f24c1b9-f086-4744-9273-41c00798a361" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/broker/target/" />
@@ -47,16 +44,16 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="gitignore" value="12" />
-          <entry key="java" value="13260" />
+          <entry key="java" value="13357" />
           <entry key="txt" value="8" />
-          <entry key="xml" value="709" />
+          <entry key="xml" value="722" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="13260" />
+          <entry key="JAVA" value="13357" />
           <entry key="PLAIN_TEXT" value="20" />
-          <entry key="XML" value="709" />
+          <entry key="XML" value="722" />
         </counts>
       </usages-collector>
     </session>
@@ -94,8 +91,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/fixme-market/src/main/java/rdejage/fixme/market/FixmeMarket.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="490">
-              <caret line="92" column="24" selection-start-line="92" selection-start-column="24" selection-end-line="92" selection-end-column="24" />
+            <state relative-caret-position="135">
+              <caret line="9" column="35" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#5391#5392#0" expanded="true" />
@@ -108,8 +105,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/fixme-market/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="287">
-              <caret line="23" column="36" lean-forward="true" selection-start-line="23" selection-start-column="36" selection-end-line="23" selection-end-column="36" />
+            <state relative-caret-position="152">
+              <caret line="14" column="35" lean-forward="true" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -177,6 +174,15 @@
           <expand>
             <path>
               <item name="fix-me" type="b2602c69:ProjectViewProjectNode" />
+              <item name="fixme-broker" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="fix-me" type="b2602c69:ProjectViewProjectNode" />
+              <item name="fixme-broker" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="fix-me" type="b2602c69:ProjectViewProjectNode" />
               <item name="fixme-market" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -202,6 +208,16 @@
               <item name="fixme-market" type="462c0819:PsiDirectoryNode" />
               <item name="target" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="fix-me" type="b2602c69:ProjectViewProjectNode" />
+              <item name="fixme-market" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+              <item name="dependencies" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="fix-me" type="b2602c69:ProjectViewProjectNode" />
+              <item name="fixme-router" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -211,7 +227,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1545401768621" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1545402203331" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -349,16 +365,15 @@
       <workItem from="1544603882338" duration="18599000" />
       <workItem from="1545125865758" duration="17200000" />
       <workItem from="1545216007522" duration="4448000" />
-      <workItem from="1545378619206" duration="19019000" />
+      <workItem from="1545378619206" duration="19405000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="59266000" />
+    <option name="totallyTimeSpent" value="59652000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1517" height="1440" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2061017" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -369,13 +384,13 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49084747" visible="true" weight="0.3270073" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49084747" visible="true" weight="0.3270073" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.50915253" side_tool="true" visible="true" weight="0.3270073" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.50915253" side_tool="true" visible="true" weight="0.3270073" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5003814" side_tool="true" weight="0.329927" />
       <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -460,15 +475,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/fixme-market/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="23" column="36" lean-forward="true" selection-start-line="23" selection-start-column="36" selection-end-line="23" selection-end-column="36" />
+        <state relative-caret-position="152">
+          <caret line="14" column="35" lean-forward="true" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/fixme-market/src/main/java/rdejage/fixme/market/FixmeMarket.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="490">
-          <caret line="92" column="24" selection-start-line="92" selection-start-column="24" selection-end-line="92" selection-end-column="24" />
+        <state relative-caret-position="135">
+          <caret line="9" column="35" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#5391#5392#0" expanded="true" />
