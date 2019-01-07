@@ -2,6 +2,7 @@ package rdejage.fixme.market;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.net.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousSocketChannel;
@@ -89,19 +90,18 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
                         String apiData = getMarketData(instrument);
                         System.out.println(apiData);
                         JSONObject  json = new JSONObject(apiData);
-                        String    mPrice = json.getString("iexBidPrice");
-                        System.out.println("Json has returned " + mPrice + " as the price");
-                        // symbol
-                        // "iexVolume": 82451,
-                        //        "avgTotalVolume": 29623234,
-                        //        "iexBidPrice": 153.01,
-                        //        "iexBidSize": 100,
-                        //        "iexAskPrice": 158.66,
-                        //        "iexAskSize": 100,
+                        // Price High
+                        Number      mPriceHigh = json.getNumber("week52High");
+                        // Price Low
+                        Number      mPriceLow = json.getNumber("week52Low");
 
                         // get status from API data analysis
                         String      status = "Rejected";
 
+                        // Check if transaction is valid
+                        if(price < mPriceHigh.intValue() && price > mPriceLow.intValue() ) {
+                            status = "Executed";
+                        }
 
                         // Construct message
                         String  marketMessage = "";
