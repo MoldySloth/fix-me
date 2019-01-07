@@ -111,7 +111,7 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
                     validInput = true;
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Invalid input --> You have not entered a market ID (ID's start at 1000) ");
+                System.out.println("Invalid input --> You have not entered a market ID (ID's start at 543210) ");
             }
         }
 
