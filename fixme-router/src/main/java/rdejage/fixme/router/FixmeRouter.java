@@ -24,7 +24,7 @@ public class FixmeRouter {
     public static void main(String[] args) throws Exception {
         System.out.println("Starting the router");
         // Starting unique ID
-        IDcurr = 1000;
+        IDcurr = 543210;
 
         // create a new socket for each
         AsynchronousServerSocketChannel brokerChannel = AsynchronousServerSocketChannel.open();
@@ -63,7 +63,7 @@ public class FixmeRouter {
         ByteBuffer                          buffer;
         SocketAddress                       clientAddress;
         Boolean                             isRead;
-        Integer                             ID;
+        Integer                             ID = null;
         String                              connectionType;
     }
 
@@ -121,7 +121,7 @@ public class FixmeRouter {
                 newAttach.serverChannel = attach.serverChannel;
                 newAttach.clientChannel = client;
                 newAttach.buffer = ByteBuffer.allocate(2048);
-                newAttach.isRead = true;
+                newAttach.isRead = false;
                 newAttach.ID = IDcurr;
                 newAttach.clientAddress = clientAddr;
                 newAttach.connectionType = "Market";
@@ -160,15 +160,19 @@ public class FixmeRouter {
     }
 
     private static Integer      checkMessage(String message) {
+        //System.out.println("init message: " + message);
         String[]    messageData = message.split("\\|");
-        int index = 0;
-        for(String data : messageData) {
-            // System.out.println("message split count: " + index + " " + data);
-            index++;
-        }
-        // Integer     checksum = Integer.parseInt(messageData[6]);
+        int         checksumTotal = Integer.parseInt(messageData[messageData.length - 1]);
 
-        if(index > 1) {
+        int     check = 0;
+        for(int a = 0; a < messageData.length - 1; a++) {
+            for (int b = 0; b < messageData[a].length(); b++) {
+                check += messageData[a].charAt(b);
+            }
+            check += '|';
+        }
+
+        if(checksumTotal == check) {
             return Integer.parseInt(messageData[0]);
         }
         return -1;

@@ -49,28 +49,37 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
             Charset cs = Charset.forName("UTF-8");
             String  message = new String(bytes, cs);
 
-            // get the ID from the charBuffer written to the channel
-            if(message.charAt(1) == 'I') {
-                //System.out.println(message);
-                String      messageID = message.replaceAll("[^0-9]", "");
-                Integer     id = Integer.parseInt(messageID);
-                attach.ID = id;
-            } else {
-                String[]    messageData = message.split("\\|");
-                System.out.format("Market responded with: " + messageData[2] + "\n");
-                System.out.println();
-            }
-            message = this.getTextFromUser(attach.ID);
+            if(message.length() > 0) {
+                // get the ID from the charBuffer written to the channel
+                if (message.charAt(1) == 'I') {
+                    //System.out.println(message);
+                    String messageID = message.replaceAll("[^0-9]", "");
+                    Integer id = Integer.parseInt(messageID);
+                    attach.ID = id;
+                } else {
+                    String[] messageData = message.split("\\|");
+                    if(messageData[2].equals("Executed") || messageData[2].equals("Rejected")) {
+                        System.out.format("Market responded with: " + messageData[2] + "\n");
+                        System.out.println();
+                    } else {
+                        System.out.println("Unable to get a response from Market. Try again");
+                    }
+                }
+                message = this.getTextFromUser(attach.ID);
 
-            try {
-                attach.buffer.clear();
-                byte[]  data = message.getBytes(cs);
-                attach.buffer.put(data);
-                attach.buffer.flip();
-                attach.isRead = false;
-                attach.channel.write(attach.buffer, attach, this);
-            } catch (Exception e) {
-                e.printStackTrace();
+                try {
+                    attach.buffer.clear();
+                    byte[] data = message.getBytes(cs);
+                    attach.buffer.put(data);
+                    attach.buffer.flip();
+                    attach.isRead = false;
+                    attach.channel.write(attach.buffer, attach, this);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("Connection disconnected");
+                System.exit(0);
             }
         } else {
             attach.isRead = true;
@@ -95,7 +104,7 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
                 Scanner     scanner = new Scanner(System.in);
 
                 int         MID = scanner.nextInt();
-                if(MID < 1000) {
+                if(MID < 543210 || MID == id) {
                     System.out.println("Invalid input");
                 } else {
                     message += Integer.toString(MID) + "|" + id + "|";

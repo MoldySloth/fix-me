@@ -62,7 +62,6 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
                     attach.buffer.clear();
                     attach.channel.read(attach.buffer, attach, this);
                 } else {
-                    System.out.println("Broker message: " + message + "\n");
                     // split the message into fix message data
                     String[]    messageData = message.split("\\|");
 
@@ -90,7 +89,7 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
                         // get API data from json string
                         String apiData = getMarketData(instrument);
                         if(apiData.length() > 1) {
-                            System.out.println(apiData);
+                            //System.out.println(apiData);
                             JSONObject  json = new JSONObject(apiData);
                             // Price High
                             Number      mPriceHigh = json.getNumber("week52High");
@@ -112,24 +111,28 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
                         System.out.println("API call rejected...");
                     }
 
+                    System.out.println("Broker message: " + message + "\n");
+
                     // Construct message
                     String  marketMessage = "";
                     marketMessage += brokerID + "|" + attach.ID + "|";
                     marketMessage += status + "|";
                     marketMessage += action + "|";
+                    marketMessage += instrument + "|";
                     marketMessage += price + "|";
                     marketMessage += quantity + "|";
 
                     // calculate checksum
                     int     checksum = 0;
-                    for(int i = 0; i < message.length(); i++) {
-                        checksum += message.charAt(i);
+                    for(int i = 0; i < marketMessage.length(); i++) {
+                        checksum += marketMessage.charAt(i);
                     }
 
                     marketMessage += Integer.toString(checksum);
 
                     // Send message
                     message = marketMessage;
+                    System.out.println("Response: " + status);
                     attach.buffer.clear();
                     byte[] data = message.getBytes();
                     attach.buffer.put(data);
@@ -170,10 +173,9 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
             throw new RuntimeException("Failed: HTTP error code: " + con.getResponseCode());
         }
 
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
         String      output;
-        System.out.println("Output from server.....");
+        //System.out.println("Output from server.....");
         StringBuffer    content = new StringBuffer();
         while ((output = in.readLine()) != null) {
             content.append(output);
