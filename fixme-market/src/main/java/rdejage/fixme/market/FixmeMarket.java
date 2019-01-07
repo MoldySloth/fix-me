@@ -62,68 +62,74 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
                     attach.buffer.clear();
                     attach.channel.read(attach.buffer, attach, this);
                 } else {
-                    System.out.println("Server Responded: " + message + "\n");
+                    System.out.println("Broker message: " + message + "\n");
+                    // split the message into fix message data
+                    String[]    messageData = message.split("\\|");
+
+                    // get market data and return fix message
+                    // get broker ID
+                    Integer     brokerID = Integer.parseInt(messageData[1]);
+
+                    // get BUY / SELL
+                    String      action = messageData[2];
+
+                    // get Instrument symbol
+                    String      instrument = messageData[3].toLowerCase();
+
+                    // get Price
+                    Integer     price = Integer.parseInt(messageData[4]);
+
+                    // get Quantity
+                    Integer     quantity = Integer.parseInt(messageData[5]);
+
+                    // get status from API data analysis
+                    String      status = "Rejected";
 
                     // API data based on symbol
                     try {
-                        // split the message into fix message data
-                        String[]    messageData = message.split("\\|");
-
-                        // get market data and return fix message
-                        // get broker ID
-                        Integer     brokerID = Integer.parseInt(messageData[1]);
-
-                        // get BUY / SELL
-                        String      action = messageData[2];
-                        // if sell... then add to sales available??
-
-                        // get Instrument symbol
-                        String      instrument = messageData[3].toLowerCase();
-
-                        // get Price
-                        Integer     price = Integer.parseInt(messageData[4]);
-
-                        // get Quantity
-                        Integer     quantity = Integer.parseInt(messageData[5]);
-
                         // get API data from json string
                         String apiData = getMarketData(instrument);
-                        System.out.println(apiData);
-                        JSONObject  json = new JSONObject(apiData);
-                        // Price High
-                        Number      mPriceHigh = json.getNumber("week52High");
-                        // Price Low
-                        Number      mPriceLow = json.getNumber("week52Low");
+                        if(apiData.length() > 1) {
+                            System.out.println(apiData);
+                            JSONObject  json = new JSONObject(apiData);
+                            // Price High
+                            Number      mPriceHigh = json.getNumber("week52High");
+                            // Price Low
+                            Number      mPriceLow = json.getNumber("week52Low");
+                            // volume available (get % of current volume)
+                            Integer     mVolume = (json.getNumber("latestVolume").intValue())/100;
 
-                        // get status from API data analysis
-                        String      status = "Rejected";
-
-                        // Check if transaction is valid
-                        if(price < mPriceHigh.intValue() && price > mPriceLow.intValue() ) {
-                            status = "Executed";
+                            // Check if transaction is valid
+                            if(price < mPriceHigh.intValue() && price > mPriceLow.intValue()) {
+                                // if sell... then add to sales available??
+                                if((action.equals("BUY") && quantity <= mVolume) || (action.equals("SELL"))) {
+                                    status = "Executed";
+                                }
+                            }
                         }
 
-                        // Construct message
-                        String  marketMessage = "";
-                        marketMessage += brokerID + "|" + attach.ID + "|";
-                        marketMessage += status + "|";
-                        marketMessage += action + "|";
-                        marketMessage += price + "|";
-                        marketMessage += quantity + "|";
-
-                        // calculate checksum
-                        int     checksum = 0;
-                        for(int i = 0; i < message.length(); i++) {
-                            checksum += message.charAt(i);
-                        }
-
-                        marketMessage += Integer.toString(checksum);
-
-                        // Send message
-                        message = marketMessage;
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        System.out.println("API call rejected...");
                     }
+
+                    // Construct message
+                    String  marketMessage = "";
+                    marketMessage += brokerID + "|" + attach.ID + "|";
+                    marketMessage += status + "|";
+                    marketMessage += action + "|";
+                    marketMessage += price + "|";
+                    marketMessage += quantity + "|";
+
+                    // calculate checksum
+                    int     checksum = 0;
+                    for(int i = 0; i < message.length(); i++) {
+                        checksum += message.charAt(i);
+                    }
+
+                    marketMessage += Integer.toString(checksum);
+
+                    // Send message
+                    message = marketMessage;
                     attach.buffer.clear();
                     byte[] data = message.getBytes();
                     attach.buffer.put(data);
@@ -176,11 +182,6 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
         con.disconnect();
 
         return content.toString();
-    }
-
-    private static String   getMessageStatus(String message, String data) {
-
-        return "rejected";
     }
 }
 

@@ -56,7 +56,9 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
                 Integer     id = Integer.parseInt(messageID);
                 attach.ID = id;
             } else {
-                System.out.format("Server responded: " + message + "\n");
+                String[]    messageData = message.split("\\|");
+                System.out.format("Market responded with: " + messageData[2] + "\n");
+                System.out.println();
             }
             message = this.getTextFromUser(attach.ID);
 

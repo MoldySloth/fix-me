@@ -85,14 +85,14 @@ public class FixmeRouter {
                 newAttach.connectionType = "Broker";
 
                 routingTable.put(newAttach.ID, newAttach);
-                System.out.println(newAttach.ID + " connected");
+                //System.out.println(newAttach.ID + " connected");
 
                 // write ID to buffer to read ID in instance
                 CharBuffer charBuffer = newAttach.buffer.asCharBuffer();
                 charBuffer.put("ID:"+ newAttach.ID);
                 charBuffer.flip();
 
-                System.out.format("Accepted a connection from %s%n", clientAddr);
+                System.out.format("Accepted a Broker connection from %s%n", clientAddr);
                 System.out.println("Attachment created: " + IDcurr + "\n");
 
                 newAttach.clientChannel.write(newAttach.buffer);
@@ -127,14 +127,14 @@ public class FixmeRouter {
                 newAttach.connectionType = "Market";
 
                 routingTable.put(newAttach.ID, newAttach);
-                System.out.println(newAttach.ID + " connected");
+                //System.out.println(newAttach.ID + " connected");
 
                 // write ID to buffer to read ID in instance
                 CharBuffer charBuffer = newAttach.buffer.asCharBuffer();
                 charBuffer.put("ID:"+ newAttach.ID);
                 charBuffer.flip();
 
-                System.out.format("Accepted a connection from %s%n", clientAddr);
+                System.out.format("Accepted a Market connection from %s%n", clientAddr);
                 System.out.println("Attachment created: " + IDcurr + "\n");
                 newAttach.clientChannel.write(newAttach.buffer);
                 IDcurr++;
@@ -210,7 +210,7 @@ public class FixmeRouter {
                     Attachment  send = getAttachment(check);
                     if(send.ID == null || (send.connectionType.equals("Broker") && attach.connectionType.equals("Broker")) || (send.connectionType.equals("Market") && attach.connectionType.equals("Market"))) {
                         send = attach;
-                        System.out.println("SEND ID: " + send.ID);
+                        //System.out.println("SEND ID: " + send.ID);
                     }
                     System.out.format("Client at %s says: %s%n", attach.clientAddress, message);
                     send.buffer.clear();
@@ -220,7 +220,7 @@ public class FixmeRouter {
                     attach.isRead = false;
                     attach.buffer.rewind();
                     // send message to broker... using broker ID... from router table
-                    System.out.println("Sending to ID: " + send.ID + " with message " + message);
+                    //System.out.println("Sending to ID: " + send.ID + " with message " + message);
                     send.clientChannel.write(send.buffer, send, this);
                 }
             } else {

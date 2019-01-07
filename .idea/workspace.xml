@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d9a1a421-b519-4fa6-9caf-089ee2be930c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixme-broker/fixme-broker.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixme-market/fixme-market.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fixme-broker/src/main/java/rdejage/fixme/broker/FixmeBroker.java" beforeDir="false" afterPath="$PROJECT_DIR$/fixme-broker/src/main/java/rdejage/fixme/broker/FixmeBroker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fixme-market/src/main/java/rdejage/fixme/market/FixmeMarket.java" beforeDir="false" afterPath="$PROJECT_DIR$/fixme-market/src/main/java/rdejage/fixme/market/FixmeMarket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixme-router/fixme-router.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fixme-router/src/main/java/rdejage/fixme/router/FixmeRouter.java" beforeDir="false" afterPath="$PROJECT_DIR$/fixme-router/src/main/java/rdejage/fixme/router/FixmeRouter.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/fixme-broker/target/" />
@@ -42,13 +39,13 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="501" />
+          <entry key="java" value="863" />
           <entry key="txt" value="9" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="501" />
+          <entry key="JAVA" value="863" />
           <entry key="PLAIN_TEXT" value="9" />
         </counts>
       </usages-collector>
@@ -59,8 +56,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/fixme-broker/src/main/java/rdejage/fixme/broker/FixmeBroker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+            <state relative-caret-position="-692">
+              <caret line="59" column="75" selection-start-line="59" selection-start-column="75" selection-end-line="59" selection-end-column="75" />
             </state>
           </provider>
         </entry>
@@ -68,8 +65,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/fixme-market/src/main/java/rdejage/fixme/market/FixmeMarket.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="454">
-              <caret line="99" lean-forward="true" selection-start-line="99" selection-end-line="99" />
+            <state relative-caret-position="399">
+              <caret line="109" column="25" selection-start-line="109" selection-start-column="25" selection-end-line="109" selection-end-column="25" />
+              <folding>
+                <element signature="e#6276#6277#0" expanded="true" />
+                <element signature="e#6311#6312#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -77,8 +78,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/fixme-router/src/main/java/rdejage/fixme/router/FixmeRouter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+            <state relative-caret-position="277">
+              <caret line="163" column="22" lean-forward="true" selection-start-line="163" selection-start-column="22" selection-end-line="163" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -91,6 +92,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/fixme-router/src/main/java/rdejage/fixme/router/FixmeRouter.java" />
+        <option value="$PROJECT_DIR$/fixme-broker/src/main/java/rdejage/fixme/broker/FixmeBroker.java" />
         <option value="$PROJECT_DIR$/fixme-market/src/main/java/rdejage/fixme/market/FixmeMarket.java" />
       </list>
     </option>
@@ -339,7 +342,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4480000" />
+    <option name="totallyTimeSpent" value="6684000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1274" height="1440" extended-state="0" />
@@ -351,10 +354,9 @@
       <window_info id="UI Designer" order="4" />
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32335767" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4991883" visible="true" weight="0.32335767" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -363,6 +365,7 @@
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Messages" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -381,24 +384,28 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/fixme-broker/src/main/java/rdejage/fixme/broker/FixmeBroker.java">
+    <entry file="file://$PROJECT_DIR$/fixme-router/src/main/java/rdejage/fixme/router/FixmeRouter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+        <state relative-caret-position="277">
+          <caret line="163" column="22" lean-forward="true" selection-start-line="163" selection-start-column="22" selection-end-line="163" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fixme-router/src/main/java/rdejage/fixme/router/FixmeRouter.java">
+    <entry file="file://$PROJECT_DIR$/fixme-broker/src/main/java/rdejage/fixme/broker/FixmeBroker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        <state relative-caret-position="-692">
+          <caret line="59" column="75" selection-start-line="59" selection-start-column="75" selection-end-line="59" selection-end-column="75" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/fixme-market/src/main/java/rdejage/fixme/market/FixmeMarket.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="454">
-          <caret line="99" lean-forward="true" selection-start-line="99" selection-end-line="99" />
+        <state relative-caret-position="399">
+          <caret line="109" column="25" selection-start-line="109" selection-start-column="25" selection-end-line="109" selection-end-column="25" />
+          <folding>
+            <element signature="e#6276#6277#0" expanded="true" />
+            <element signature="e#6311#6312#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
