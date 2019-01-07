@@ -9,6 +9,8 @@ import java.nio.channels.CompletionHandler;
 import java.nio.charset.Charset;
 import java.util.concurrent.Future;
 
+import org.json.JSONObject;
+
 public class FixmeMarket {
     public static void main(String[] args) throws Exception {
         System.out.println("Starting the market");
@@ -85,7 +87,17 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
 
                         // get API data from json string
                         String apiData = getMarketData(instrument);
+                        System.out.println(apiData);
                         JSONObject  json = new JSONObject(apiData);
+                        String    mPrice = json.getString("iexBidPrice");
+                        System.out.println("Json has returned " + mPrice + " as the price");
+                        // symbol
+                        // "iexVolume": 82451,
+                        //        "avgTotalVolume": 29623234,
+                        //        "iexBidPrice": 153.01,
+                        //        "iexBidSize": 100,
+                        //        "iexAskPrice": 158.66,
+                        //        "iexAskSize": 100,
 
                         // get status from API data analysis
                         String      status = "Rejected";
@@ -140,7 +152,7 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
         // get symbol your would like to get data for...
         // json returns high and low cost for the day, also volume...
         // IEX Trading API
-        String      URLstring = "https://api.iextrading.com/1.0/stock/" + symbol + "/previous";
+        String      URLstring = "https://api.iextrading.com/1.0/stock/" + symbol + "/quote";
 
         URL         UrlObj = new URL(URLstring);
         HttpURLConnection   con = (HttpURLConnection) UrlObj.openConnection();
@@ -164,6 +176,11 @@ class ReadWriteHandler implements CompletionHandler<Integer, Attachment> {
         con.disconnect();
 
         return content.toString();
+    }
+
+    private static String   getMessageStatus(String message, String data) {
+
+        return "rejected";
     }
 }
 
